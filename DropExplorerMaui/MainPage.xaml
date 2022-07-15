@@ -1,41 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DropExplorerMaui.MainPage">
-			 
-    <ScrollView>
-        <VerticalStackLayout 
-            Spacing="25" 
-            Padding="30,0" 
-            VerticalOptions="Center">
+<ContentPage
+    x:Class="DropExplorerMaui.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-                
-            <Label 
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-            
-            <Label 
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+    <ContentPage.Resources>
+        <Thickness x:Key="MarginGap">4</Thickness>
+        <x:Double x:Key="GridGap">4</x:Double>
+        <x:Double x:Key="GridBigButtonSize">40</x:Double>
+        <x:Double x:Key="DropFontSize">12</x:Double>
+    </ContentPage.Resources>
 
-            <Button 
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+    <Grid Margin="{StaticResource MarginGap}">
+        <Grid.RowDefinitions>
+            <!-- Error bar -->
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource GridGap}" />
+            <!-- Top text boxes -->
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource GridGap}" />
+            <!-- Main content -->
+            <RowDefinition Height="*" />
+            <RowDefinition Height="{StaticResource GridGap}" />
+            <!-- Status bar -->
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        </VerticalStackLayout>
-    </ScrollView>
- 
+        <!-- TODO
+        <ui:InfoBar />
+        -->
+
+        <!-- Top row -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="{StaticResource GridGap}" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="{StaticResource GridGap}" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="{StaticResource GridGap}" />
+                <ColumnDefinition Width="{StaticResource GridBigButtonSize}" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{StaticResource GridGap}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label
+                Text="Drop name"
+                HorizontalOptions="End"
+                FontSize="{StaticResource DropFontSize}"
+                Padding="0"
+                VerticalOptions="Center" />
+            <Border Grid.Column="2" Grid.ColumnSpan="3" Stroke="Red" StrokeThickness="1" StrokeShape="Rectangle" Background="Yellow">
+                <Entry
+                    x:Name="editDropName"
+                    Text="{Binding TypingDropName, Mode=TwoWay}"
+                    windows:VisualElement.AccessKey="D" />
+            </Border>
+            <Button Grid.Column="6" Grid.RowSpan="3" Command="{Binding GoCommand}" Text="Go">
+                <!--<Button.IsEnabled>
+                    <MultiBinding Converter="{StaticResource DropNameReadyToBoolConverter}">
+                        <Binding Source="{x:Reference progressBar}" Path="IsLoading" />
+                        <Binding Path="TypingDropName" />
+                    </MultiBinding>
+                </Button.IsEnabled>-->
+                <!--<Rectangle Fill="{StaticResource GoToNextBrush}" Width="20" Height="20" />-->
+            </Button>
+        </Grid>
+
+    </Grid>
+
 </ContentPage>
