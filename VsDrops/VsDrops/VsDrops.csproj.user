@@ -6,10 +6,15 @@
     <ActiveDebugProfile>Windows Machine</ActiveDebugProfile>
   </PropertyGroup>
   <ItemGroup>
-    <None Update="App.xaml">
+    <MauiXaml Update="UI\LoadingPage.xaml">
       <SubType>Designer</SubType>
-    </None>
-    <None Update="MainPage.xaml">
+    </MauiXaml>
+    <MauiXaml Update="UI\LoginPage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
     <None Update="Platforms\Windows\App.xaml">

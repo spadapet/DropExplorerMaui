@@ -1,25 +1,23 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Hosting;
+﻿using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
 
 namespace VsDrops
 {
     public static class MauiProgram
     {
+        public const string DisplayName = "VS Drops";
+        public const string InternalName = "VsDrops";
+
         public static MauiApp CreateMauiApp()
         {
-            MauiAppBuilder builder = MauiApp.CreateBuilder();
-            builder
+            return MauiApp.CreateBuilder()
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
-            return builder.Build();
+                })
+                .Build();
         }
     }
 }
