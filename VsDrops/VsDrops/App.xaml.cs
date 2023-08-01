@@ -54,15 +54,15 @@ internal partial class App : Application
 
         Window window = base.CreateWindow(activationState);
         window.Title = MauiProgram.DisplayName;
-        window.Stopped += this.OnWindowStopped;
+        window.Destroying += this.OnWindowDestroying;
 
         return window;
     }
 
-    private void OnWindowStopped(object sender, EventArgs args)
+    private void OnWindowDestroying(object sender, EventArgs args)
     {
         Window window = (Window)sender;
-        window.Stopped -= this.OnWindowStopped;
+        window.Destroying -= this.OnWindowDestroying;
 
         // Check if the last window is being closed
         if (this.Windows.Count <= 1)

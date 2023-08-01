@@ -13,7 +13,7 @@ public sealed class AppModel : PropertyNotifier, IDisposable
 
     private void EnsureValid()
     {
-        // I'm valid!
+        this.adoModel.EnsureValid();
     }
 
     public Settings Settings { get; } = new();

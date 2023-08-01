@@ -4,7 +4,8 @@
              xmlns:vsdrops="clr-namespace:VsDrops"
              x:Class="VsDrops.UI.MainPage"
              x:ClassModifier="internal"
-             Title="{x:Static vsdrops:MauiProgram.DisplayName}">
+             Title="{x:Static vsdrops:MauiProgram.DisplayName}"
+             Loaded="OnLoaded">
 
     <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
 
