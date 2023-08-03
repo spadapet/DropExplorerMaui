@@ -1,10 +1,10 @@
 ﻿namespace VsDrops.Model;
 
-public sealed class ShellModel : PropertyNotifier
+public sealed class MainModel : PropertyNotifier
 {
     public AppModel AppModel { get; }
 
-    public ShellModel(AppModel appModel)
+    public MainModel(AppModel appModel)
     {
         this.AppModel = appModel;
     }

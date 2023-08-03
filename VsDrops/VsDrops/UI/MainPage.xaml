@@ -2,32 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vsdrops="clr-namespace:VsDrops"
+             xmlns:model="clr-namespace:VsDrops.Model"
+             xmlns:sf="http://schemas.syncfusion.com/maui"
+             xmlns:xceed="http://schemas.xceed.com/maui/xaml/toolkit"
              x:Class="VsDrops.UI.MainPage"
              x:ClassModifier="internal"
+             x:DataType="{x:Type model:MainModel}"
+             BindingContext="{Binding Model, Source={RelativeSource Mode=Self}}"
              Title="{x:Static vsdrops:MauiProgram.DisplayName}"
              Loaded="OnLoaded">
-
-    <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
-
-        <Image
-            Source="dotnet_bot.png"
-            SemanticProperties.Description="Cute dot net bot waving hi to you!"
-            HeightRequest="200"
-            HorizontalOptions="Center" />
-
-        <Label
-            Text="Hello, World!"
-            SemanticProperties.HeadingLevel="Level1"
-            FontSize="32"
-            HorizontalOptions="Center" />
-
-        <Label
-            Text="Welcome to .NET Multi-platform App UI"
-            SemanticProperties.HeadingLevel="Level2"
-            SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-            FontSize="18"
-            HorizontalOptions="Center" />
-
-    </VerticalStackLayout>
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Start" Background="{Binding TrackFill, Source={x:Reference progressBar}}" IsVisible="{Binding AppModel.ProgressBar.IsLoading}">
+            <HorizontalStackLayout Spacing="4" Margin="4,2,0,2">
+                <xceed:Button x:Name="cancelButton" Clicked="OnClickCancel" Padding="0" BorderBrush="Red" AutomationProperties.Name="Cancel" ToolTipProperties.Text="Cancel">
+                    <Path WidthRequest="16" HeightRequest="16" StrokeThickness="2" Stroke="Red" Data="M2,2 14,14 M2,14 14,2" />
+                </xceed:Button>
+                <Label Text="{Binding AppModel.ProgressBar.LoadingText}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <sf:SfLinearProgressBar x:Name="progressBar" HeightRequest="4" Minimum="0" Maximum="1"
+                IsIndeterminate="{Binding AppModel.ProgressBar.IsIndeterminate}"
+                Progress="{Binding AppModel.ProgressBar.Progress}" />
+        </VerticalStackLayout>
+    </Grid>
 
 </ContentPage>

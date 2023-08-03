@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace VsDrops.Model;
 
+[DebuggerDisplay("{Name,nq} {Id}")]
 public sealed class AdoProject : IComparable, IComparable<AdoProject>, IEquatable<AdoProject>
 {
     public Guid Id { get; set; }
-    public string Abbreviation { get; set; }
     public string Name { get; set; }
-    public string Description { get; set; }
     public string Url { get; set; }
-    public string DefaultTeamImageUrl { get; set; }
 
     public override string ToString()
     {

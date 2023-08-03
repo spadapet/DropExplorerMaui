@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Diagnostics;
 
 namespace VsDrops.Model;
 
+[DebuggerDisplay("State={State}")]
 public sealed class AppModel : PropertyNotifier, IDisposable
 {
     public void Dispose()

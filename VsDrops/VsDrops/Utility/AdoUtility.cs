@@ -49,7 +49,7 @@ public static class AdoUtility
             }
         }
 
-        string defaultAccountName = results.FirstOrDefault()?.Name;
+        string defaultAccountName = (results.FirstOrDefault(a => string.Equals(a.Name, MauiProgram.DefaultAccountName, StringComparison.OrdinalIgnoreCase)) ?? results.FirstOrDefault())?.Name;
         results.Sort();
         return (results, defaultAccountName);
     }
@@ -69,17 +69,14 @@ public static class AdoUtility
                 results.Add(new()
                 {
                     Id = project.Id,
-                    Abbreviation = project.Abbreviation,
                     Name = project.Name,
-                    Description = project.Description,
                     Url = project.Url,
-                    DefaultTeamImageUrl = project.DefaultTeamImageUrl,
                 });
             }
         }
         while (page.ContinuationToken != null);
 
-        string defaultProjectName = results.FirstOrDefault()?.Name;
+        string defaultProjectName = (results.FirstOrDefault(p => string.Equals(p.Name, MauiProgram.DefaultProjectName, StringComparison.OrdinalIgnoreCase)) ?? results.FirstOrDefault())?.Name;
         results.Sort();
         return (results, defaultProjectName);
     }

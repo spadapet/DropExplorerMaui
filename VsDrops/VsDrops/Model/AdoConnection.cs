@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.Services.OAuth;
 using Microsoft.VisualStudio.Services.WebApi;
 using System;
+using System.Diagnostics;
 
 namespace VsDrops.Model;
 
+[DebuggerDisplay("{UserName,nq}")]
 public sealed class AdoConnection : IDisposable
 {
     public string UserName { get; set; }

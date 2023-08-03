@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:VsDrops.Model"
+    xmlns:sfc="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     x:Class="VsDrops.UI.LoginPage"
     x:ClassModifier="internal"
     x:DataType="{x:Type model:LoginModel}"
@@ -11,7 +12,7 @@
 
     <Grid>
         <VerticalStackLayout x:Name="NormalLayout" IsVisible="{Binding HasError, Converter={StaticResource InverseBoolConverter}}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
-            <ActivityIndicator IsRunning="True" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" />
+            <sfc:SfBusyIndicator IsRunning="True" SizeFactor="1" WidthRequest="100" HeightRequest="100" />
             <Label HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>

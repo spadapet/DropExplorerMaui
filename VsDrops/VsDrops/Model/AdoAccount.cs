@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace VsDrops.Model;
 
+[DebuggerDisplay("{Name,nq} {Id}")]
 public sealed class AdoAccount : PropertyNotifier, IComparable, IComparable<AdoAccount>, IEquatable<AdoAccount>
 {
     public Guid Id { get; set; }

@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace VsDrops.Model;
 
+[DebuggerDisplay("Account={CurrentAccount}, Connection={Connection}")]
 public sealed class AdoModel : PropertyNotifier, IDisposable
 {
     public ObservableCollection<AdoAccount> Accounts { get; } = new();

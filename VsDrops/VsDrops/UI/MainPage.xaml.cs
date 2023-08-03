@@ -9,12 +9,12 @@ namespace VsDrops.UI;
 
 internal partial class MainPage : ContentPage, IUpdatable
 {
-    public ShellModel Model { get; }
+    public MainModel Model { get; }
     private CancellationTokenSource cancellationTokenSource;
 
     public MainPage()
     {
-        this.Model = new ShellModel(App.Current.Model);
+        this.Model = new MainModel(App.Current.Model);
         this.InitializeComponent();
     }
 
@@ -34,7 +34,7 @@ internal partial class MainPage : ContentPage, IUpdatable
         TaskUtility.FileAndForget(async () =>
         {
             this.cancellationTokenSource = new CancellationTokenSource();
-            WorkData work = new("Getting Azure DevOps data", this.cancellationTokenSource)
+            WorkData work = new("Getting project info", this.cancellationTokenSource)
             {
                 Progress = 1
             };
