@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace VsDrops.Model;
@@ -9,6 +10,8 @@ public sealed class AdoProject : IComparable, IComparable<AdoProject>, IEquatabl
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Url { get; set; }
+
+    public ObservableCollection<AdoBuildDefinition> BuildDefinitions { get; } = new();
 
     public override string ToString()
     {

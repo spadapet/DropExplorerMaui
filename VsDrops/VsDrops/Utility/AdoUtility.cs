@@ -1,4 +1,5 @@
-﻿using Microsoft.TeamFoundation.Core.WebApi;
+﻿using Microsoft.TeamFoundation.Build.WebApi;
+using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.VisualStudio.Services.Account;
 using Microsoft.VisualStudio.Services.Account.Client;
 using Microsoft.VisualStudio.Services.OAuth;
@@ -14,20 +15,22 @@ namespace VsDrops.Utility;
 
 public static class AdoUtility
 {
-    public static async Task UpdateAccountsAsync(this AdoModel model, CancellationToken cancellationToken)
+    public static async Task<AdoAccount> UpdateAccountsAsync(this AdoModel model, string forcedCurrentAccount, CancellationToken cancellationToken)
     {
         string currentAccountName = model.CurrentAccountName;
         var (accounts, defaultAccountName) = await AdoUtility.GetAccountsAsync(model.Connection, cancellationToken);
         model.Accounts.SortedMerge(accounts, replaceEqualItems: false);
-        model.CurrentAccountName = currentAccountName ?? defaultAccountName;
+        model.CurrentAccountName = forcedCurrentAccount ?? currentAccountName ?? defaultAccountName;
+        return model.CurrentAccount;
     }
 
-    public static async Task UpdateProjectsAsync(AdoConnection connection, AdoAccount account, CancellationToken cancellationToken)
+    public static async Task<AdoProject> UpdateProjectsAsync(AdoConnection connection, AdoAccount account, string forcedCurrentProject, CancellationToken cancellationToken)
     {
         string currentProjectName = account.CurrentProjectName;
         var (projects, defaultProjectName) = await AdoUtility.GetProjectsAsync(connection, account, cancellationToken);
         account.Projects.SortedMerge(projects, replaceEqualItems: false);
-        account.CurrentProjectName = currentProjectName ?? defaultProjectName;
+        account.CurrentProjectName = forcedCurrentProject ?? currentProjectName ?? defaultProjectName;
+        return account.CurrentProject;
     }
 
     private static async Task<(List<AdoAccount>, string defaultAccountName)> GetAccountsAsync(AdoConnection connection, CancellationToken cancellationToken)
@@ -79,5 +82,71 @@ public static class AdoUtility
         string defaultProjectName = (results.FirstOrDefault(p => string.Equals(p.Name, MauiProgram.DefaultProjectName, StringComparison.OrdinalIgnoreCase)) ?? results.FirstOrDefault())?.Name;
         results.Sort();
         return (results, defaultProjectName);
+    }
+
+    public static async Task<IReadOnlyList<AdoBuildDefinition>> UpdateBuildDefinitionsAsync(AdoConnection connection, AdoAccount account, AdoProject project, CancellationToken cancellationToken)
+    {
+        List<AdoBuildDefinition> definitions = await AdoUtility.GetBuildDefinitionsAsync(connection, account, project, cancellationToken);
+        project.BuildDefinitions.SortedMerge(definitions, replaceEqualItems: false);
+        return project.BuildDefinitions;
+    }
+
+    private static async Task<List<AdoBuildDefinition>> GetBuildDefinitionsAsync(AdoConnection connection, AdoAccount account, AdoProject project, CancellationToken cancellationToken)
+    {
+        List<AdoBuildDefinition> results = new();
+        BuildHttpClient buildClient = await connection.Connect(account).GetClientAsync<BuildHttpClient>(cancellationToken);
+        List<BuildDefinitionReference> definitions = await buildClient.GetDefinitionsAsync(project.Name, definitionIds: MauiProgram.DefaultBuilds, cancellationToken: cancellationToken);
+
+        foreach (BuildDefinitionReference definition in definitions)
+        {
+            results.Add(new()
+            {
+                Id = definition.Id,
+                Name = definition.Name,
+                Url = definition.Url,
+            });
+        }
+
+        results.Sort();
+        return results;
+    }
+
+    public static async Task<IReadOnlyList<AdoBuild>> UpdateBuildsAsync(AdoConnection connection, AdoAccount account, AdoProject project, AdoBuildDefinition definition, CancellationToken cancellationToken)
+    {
+        List<AdoBuild> builds = await AdoUtility.GetBuildsAsync(connection, account, project, definition, cancellationToken);
+        definition.Builds.SortedMerge(builds, replaceEqualItems: false);
+        return definition.Builds;
+    }
+
+    private static async Task<List<AdoBuild>> GetBuildsAsync(AdoConnection connection, AdoAccount account, AdoProject project, AdoBuildDefinition definition, CancellationToken cancellationToken)
+    {
+        List<AdoBuild> results = new();
+        BuildHttpClient buildClient = await connection.Connect(account).GetClientAsync<BuildHttpClient>(cancellationToken);
+        List<Build> builds = await buildClient.GetBuildsAsync(
+            project.Name,
+            definitions: new int[] { definition.Id },
+            minFinishTime: DateTime.UtcNow.AddDays(-MauiProgram.MaxDaysOfBuilds),
+            statusFilter: BuildStatus.Completed,
+            resultFilter: BuildResult.Succeeded | BuildResult.PartiallySucceeded,
+            maxBuildsPerDefinition: MauiProgram.MaxBuildsPerDefinition,
+            queryOrder: BuildQueryOrder.FinishTimeDescending,
+            cancellationToken: cancellationToken);
+
+        foreach (Build build in builds)
+        {
+            results.Add(new()
+            {
+                Id = build.Id,
+                Revision = build.BuildNumberRevision ?? 0,
+                Name = build.BuildNumber,
+                Branch = build.SourceBranch,
+                Url = build.Url,
+                StartTime = build.StartTime,
+                FinishTime = build.FinishTime,
+            });
+        }
+
+        results.Sort();
+        return results;
     }
 }

@@ -9,8 +9,13 @@ namespace VsDrops
     {
         public const string DisplayName = "VS Drops";
         public const string InternalName = "VsDrops";
-        public const string DefaultAccountName = "DevDiv";
+        public const string DefaultAccountName = "devdiv";
         public const string DefaultProjectName = "DevDiv";
+        public const int DD_CB_TestSignVS = 10289;
+        public const int DD_CB_ReleaseVS = 10369;
+        public const int MaxBuildsPerDefinition = 100;
+        public const int MaxDaysOfBuilds = 1;
+        public static readonly int[] DefaultBuilds = new[] { DD_CB_TestSignVS, DD_CB_ReleaseVS };
 
         public static MauiApp CreateMauiApp()
         {

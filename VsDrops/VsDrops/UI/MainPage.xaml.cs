@@ -1,5 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using VsDrops.Model;
@@ -34,7 +36,7 @@ internal partial class MainPage : ContentPage, IUpdatable
         TaskUtility.FileAndForget(async () =>
         {
             this.cancellationTokenSource = new CancellationTokenSource();
-            WorkData work = new("Getting project info", this.cancellationTokenSource)
+            WorkData work = new("Loading builds...", this.cancellationTokenSource)
             {
                 Progress = 1
             };
@@ -62,11 +64,16 @@ internal partial class MainPage : ContentPage, IUpdatable
     {
         AdoModel ado = this.Model.AppModel.AdoModel;
 
-        await AdoUtility.UpdateAccountsAsync(ado, cancellationToken);
-
-        if (ado.CurrentAccount is AdoAccount account)
+        if (await AdoUtility.UpdateAccountsAsync(ado, MauiProgram.DefaultAccountName, cancellationToken) is AdoAccount account &&
+            await AdoUtility.UpdateProjectsAsync(ado.Connection, account, MauiProgram.DefaultProjectName, cancellationToken) is AdoProject project)
         {
-            await AdoUtility.UpdateProjectsAsync(ado.Connection, account, cancellationToken);
+            foreach (AdoBuildDefinition definition in await AdoUtility.UpdateBuildDefinitionsAsync(ado.Connection, account, project, cancellationToken))
+            {
+                foreach (AdoBuild build in await AdoUtility.UpdateBuildsAsync(ado.Connection, account, project, definition, cancellationToken))
+                {
+                    // TODO
+                }
+            }
         }
     }
 
