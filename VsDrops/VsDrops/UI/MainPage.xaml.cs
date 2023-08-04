@@ -81,4 +81,14 @@ internal partial class MainPage : ContentPage, IUpdatable
     {
         this.cancellationTokenSource?.Cancel();
     }
+
+    private void OnRestart(object sender, EventArgs args)
+    {
+        this.Model.AppModel.State = AppState.Loading;
+    }
+
+    private void OnSettings(object sender, EventArgs args)
+    {
+
+    }
 }

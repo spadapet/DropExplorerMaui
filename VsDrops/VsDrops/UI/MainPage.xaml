@@ -52,6 +52,10 @@
 
         <Grid Margin="10,40,10,0" RowDefinitions="Auto,Auto,*">
             <Label Text="Pipelines:" FontSize="Title" />
+            <HorizontalStackLayout HorizontalOptions="End" Spacing="10">
+                <xceed:Button Content="Restart" Clicked="OnRestart" />
+                <xceed:Button Content="Settings" Clicked="OnSettings" />
+            </HorizontalStackLayout>
             <sf:SfTabView
                 x:Name="tabView"
                 Grid.Row="1"
