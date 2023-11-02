@@ -1,13 +1,8 @@
 ﻿namespace VsDrops.Model;
 
-public sealed class MainModel : PropertyNotifier
+public sealed class MainModel(AppModel appModel) : PropertyNotifier
 {
-    public AppModel AppModel { get; }
-
-    public MainModel(AppModel appModel)
-    {
-        this.AppModel = appModel;
-    }
+    public AppModel AppModel { get; } = appModel;
 
     private AdoBuildDefinition buildDefinition;
     public AdoBuildDefinition BuildDefinition
@@ -24,14 +19,15 @@ public sealed class MainModel : PropertyNotifier
 
     public int BuildDefinitionIndex
     {
-        get => this.AppModel.AdoModel.CurrentAccount.CurrentProject.BuildDefinitions.IndexOf(this.BuildDefinition);
+        get => this.AppModel.AdoModel.CurrentAccount?.CurrentProject?.BuildDefinitions.IndexOf(this.BuildDefinition) ?? -1;
         set
         {
-            if (value != this.BuildDefinitionIndex &&
+            if (this.AppModel.AdoModel.CurrentAccount?.CurrentProject is AdoProject project &&
+                value != this.BuildDefinitionIndex &&
                 value >= 0 &&
-                value < this.AppModel.AdoModel.CurrentAccount.CurrentProject.BuildDefinitions.Count)
+                value < project.BuildDefinitions.Count)
             {
-                this.buildDefinition = this.AppModel.AdoModel.CurrentAccount.CurrentProject.BuildDefinitions[value];
+                this.buildDefinition = project.BuildDefinitions[value];
                 this.OnPropertyChanged(nameof(this.BuildDefinition));
             }
         }

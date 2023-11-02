@@ -15,11 +15,11 @@ namespace VsDrops
         public const int DD_CB_ReleaseVS = 10369;
         public const int MaxBuildsPerDefinition = 100;
         public const int MaxDaysOfBuilds = 1;
-        public static readonly int[] DefaultBuilds = new[] { DD_CB_TestSignVS, DD_CB_ReleaseVS };
+        public static readonly int[] DefaultBuilds = [DD_CB_TestSignVS, DD_CB_ReleaseVS];
 
         public static MauiApp CreateMauiApp()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NGaF1cWmhAYVJpR2NbfE53flRGallUVBYiSV9jS31TfkVhWHZcdHZURmZdVA==");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjc5MjE1MEAzMjMzMmUzMDJlMzBrYjJRemtlNU55c2tDNFUrNUhlN2lhWW1QaVpXSSs4QlFBYlRtQzR6Y2VjPQ==");
 
             return MauiApp.CreateBuilder()
                 .ConfigureSyncfusionCore()

@@ -9,7 +9,7 @@ namespace VsDrops.Model;
 [DebuggerDisplay("Account={CurrentAccount}, Connection={Connection}")]
 public sealed class AdoModel : PropertyNotifier, IDisposable
 {
-    public ObservableCollection<AdoAccount> Accounts { get; } = new();
+    public ObservableCollection<AdoAccount> Accounts { get; } = [];
 
     public void Dispose()
     {
@@ -20,7 +20,9 @@ public sealed class AdoModel : PropertyNotifier, IDisposable
         }
     }
 
+#pragma warning disable CA1822 // Mark members as static
     public void EnsureValid()
+#pragma warning restore CA1822 // Mark members as static
     {
         // Nothing to ensure yet
     }

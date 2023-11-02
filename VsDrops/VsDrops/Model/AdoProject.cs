@@ -11,7 +11,7 @@ public sealed class AdoProject : IComparable, IComparable<AdoProject>, IEquatabl
     public string Name { get; set; }
     public string Url { get; set; }
 
-    public ObservableCollection<AdoBuildDefinition> BuildDefinitions { get; } = new();
+    public ObservableCollection<AdoBuildDefinition> BuildDefinitions { get; } = [];
 
     public override string ToString()
     {
