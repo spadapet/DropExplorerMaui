@@ -19,7 +19,7 @@ namespace VsDrops
 
         public static MauiApp CreateMauiApp()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjc5MjE1MEAzMjMzMmUzMDJlMzBrYjJRemtlNU55c2tDNFUrNUhlN2lhWW1QaVpXSSs4QlFBYlRtQzR6Y2VjPQ==");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("XXX");
 
             return MauiApp.CreateBuilder()
                 .ConfigureSyncfusionCore()

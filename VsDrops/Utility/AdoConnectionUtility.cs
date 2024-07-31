@@ -70,7 +70,13 @@ public static class AdoConnectionUtility
         }
         catch (MsalUiRequiredException ex)
         {
-            authentication = await application.AcquireTokenInteractive(scopes).WithClaims(ex.Claims).ExecuteAsync(cancellationToken);
+            authentication = await application.AcquireTokenInteractive(scopes)
+                .WithClaims(ex.Claims)
+#if ANDROID
+                .WithParentActivityOrWindow(MainActivity.Instance)
+                .WithPrompt(Prompt.SelectAccount)
+#endif
+                .ExecuteAsync(cancellationToken);
         }
 
         return new AdoConnection()

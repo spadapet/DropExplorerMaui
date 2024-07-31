@@ -32,29 +32,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Identity.Client" Version="4.57.0" />
-		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.57.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.205.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.205.1" />
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.62.0" />
+		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.62.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.80-ci.net8.24377.1" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.80-ci.net8.24377.1" />
+		<PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.239.0-preview" />
+		<PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="19.239.0-preview" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Syncfusion.Maui.Core" Version="23.1.43" />
-		<PackageReference Include="Syncfusion.Maui.DataGrid" Version="23.1.43" />
-		<PackageReference Include="Syncfusion.Maui.Expander" Version="23.1.43" />
-		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.1.43" />
-		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="23.1.43" />
-		<PackageReference Include="Syncfusion.Maui.TabView" Version="23.1.43" />
-		<PackageReference Include="Xceed.Product.Maui.Toolkit.Full" Version="1.5.23517.727" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="UI\LoadingPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="UI\LoginPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<PackageReference Include="Syncfusion.Maui.Core" Version="26.2.5" />
+		<PackageReference Include="Syncfusion.Maui.DataGrid" Version="26.2.5" />
+		<PackageReference Include="Syncfusion.Maui.Expander" Version="26.2.5" />
+		<PackageReference Include="Syncfusion.Maui.Popup" Version="26.2.5" />
+		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="26.2.5" />
+		<PackageReference Include="Syncfusion.Maui.TabView" Version="26.2.5" />
+		<PackageReference Include="Xceed.Product.Maui.Toolkit.Full" Version="1.7.24157.1331" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-maccatalyst')) and '$(Configuration)' == 'Debug'">
